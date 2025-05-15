@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameSphere - Gaming Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/framer-motion/dist/framer-motion.umd.js"></script>
+  </head>
+  <body class="bg-gradient-to-br from-gray-900 to-black text-white">
+    <div id="root"></div><script type="text/javascript">
+  const { useState, useEffect } = React;
+  const { motion } = window['framer-motion'];
+
+  function GamingBlog() {
+    const [posts, setPosts] = useState([]);
+    const [search, setSearch] = useState("");
+    const [isAdmin] = useState(true);
+
+    useEffect(() => {
+      // Simulated API fetch
+      setPosts([
+        {
+          title: "Top 10 RPGs of All Time",
+          excerpt: "Explore the most immersive and legendary role-playing games ever made...",
+          image: "https://via.placeholder.com/600x300?text=RPGs"
+        },
+        {
+          title: "Esports in 2025: What to Expect",
+          excerpt: "A deep dive into the future of competitive gaming and the evolving esports scene...",
+          image: "https://via.placeholder.com/600x300?text=Esports"
+        },
+        {
+          title: "Indie Games Revolution",
+          excerpt: "How small teams are creating some of the most innovative gaming experiences...",
+          image: "https://via.placeholder.com/600x300?text=Indie+Games"
+        }
+      ]);
+    }, []);
+
+    const filteredPosts = posts.filter((post) =>
+      post.title.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const handleCreatePost = () => {
+      alert("Redirecting to admin post creation...");
+    };
+
+    return (
+      React.createElement("div", {},
+        React.createElement("header", { className: "p-6 flex items-center justify-between max-w-7xl mx-auto" },
+          React.createElement("div", { className: "flex items-center gap-2 text-2xl font-bold" },
+            "🎮 GameSphere"
+          ),
+          React.createElement("div", { className: "flex items-center gap-2" },
+            React.createElement("input", {
+              className: "w-64 px-3 py-2 rounded bg-gray-800 border border-gray-600",
+              placeholder: "Search articles...",
+              value: search,
+              onChange: (e) => setSearch(e.target.value)
+            }),
+            isAdmin && React.createElement("button", {
+              onClick: handleCreatePost,
+              className: "px-4 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white"
+            }, "New Post")
+          )
+        ),
+
+        React.createElement(motion.section, {
+          className: "text-center py-16 px-4",
+          initial: { opacity: 0, y: -20 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6 }
+        },
+          React.createElement("h1", { className: "text-5xl font-extrabold mb-4" }, "Level Up Your Game Knowledge"),
+          React.createElement("p", { className: "text-lg text-gray-300 max-w-xl mx-auto" },
+            "Dive into expert reviews, news, and insights from the ever-evolving world of video games."
+          )
+        ),
+
+        React.createElement("section", { className: "grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto px-4 pb-20" },
+          filteredPosts.map((post, index) => (
+            React.createElement(motion.div, {
+              key: index,
+              className: "rounded-2xl overflow-hidden shadow-lg bg-gray-800",
+              whileHover: { scale: 1.03 },
+              transition: { type: "spring", stiffness: 300 }
+            },
+              React.createElement("img", { src: post.image, alt: post.title, className: "w-full h-48 object-cover" }),
+              React.createElement("div", { className: "p-4" },
+                React.createElement("h2", { className: "text-xl font-semibold mb-2" }, post.title),
+                React.createElement("p", { className: "text-sm text-gray-400" }, post.excerpt),
+                React.createElement("button", { className: "mt-4 text-purple-400 hover:underline" }, "Read More")
+              )
+            )
+          ))
+        ),
+
+        React.createElement("footer", { className: "text-center py-6 border-t border-gray-700 text-gray-500" },
+          "© 2025 GameSphere. Powered by passion & pixels. | Deployed on Vercel"
+        )
+      )
+    );
+  }
+
+  ReactDOM.render(React.createElement(GamingBlog), document.getElementById("root"));
+</script>
+
+  </body>
+</html>
